@@ -1,5 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, setState } from "react";
 import { login } from '../utils';
+import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 
 export default class Login extends Component {
     
@@ -7,7 +9,8 @@ export default class Login extends Component {
         super()
 
         this.state = {
-            status: null
+            status: null,
+            alert: false
         }
     }
 
@@ -40,6 +43,7 @@ export default class Login extends Component {
             history.push("/dashboard")
         } else {
             console.log("Incorrect Password!")
+            this.setState({alert: true})
         }
     }
 
@@ -59,13 +63,19 @@ export default class Login extends Component {
         this.setState({password: event.target.value});
     }
     
-  
+ 
 
 
     render() {
         return (
+            
             <div>
+                            
             <div className="auth-wrapper" style={{marginTop: 100}}>
+            {this.state.alert && <Alert variant="danger">
+                    Incorrect username or password
+            </Alert>}
+
             <div className="auth-inner">
             <form onSubmit={this.handleSubmit}>
                 <h3>Sign In</h3>
@@ -94,6 +104,7 @@ export default class Login extends Component {
             </form>
             </div>
             </div>
+
             </div>
         );
     }
