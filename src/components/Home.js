@@ -8,6 +8,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import Navbar from './Navbar';
 import Stats from './Stats';
+import Profile from './Profile';
 import { createBrowserHistory } from "history";
 
 const history = createBrowserHistory();
@@ -39,6 +40,8 @@ class Home extends Component {
               <PublicRoute restricted={false} component={SignUp} path="/sign-up" exact />
               <PrivateRoute component={Dashboard} path="/dashboard" exact />
               <PrivateRoute component={Stats} path="/stats" exact />
+              <PrivateRoute component={Profile} path="/profile" exact />
+
             </Switch>
     
           </BrowserRouter>

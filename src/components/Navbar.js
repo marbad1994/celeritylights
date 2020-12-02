@@ -53,6 +53,9 @@ export default class Navbar extends React.Component {
             <li className="nav-item">
                 <Link style={{color: "#fff"}} className="nav-link" to={"/stats"}>Stats</Link>
             </li>
+            <li className="nav-item">
+                <Link style={{color: "#fff"}} to={"/profile"} className="nav-link">Profile</Link>
+            </li>
                 <li className="nav-item">
                 <Link style={{color: "#fff"}} onClick={this.handleLogout} className="nav-link" to={"/sign-in"}>Logout</Link>
             </li>
