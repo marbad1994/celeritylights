@@ -1,6 +1,7 @@
 import React, { setState } from 'react';
 import { Link } from "react-router-dom";
 import { logout, isLogin } from '../utils';
+import logo from '../logo.png';
 
 export default class Navbar extends React.Component {
     
@@ -31,13 +32,13 @@ export default class Navbar extends React.Component {
     }
 
 
-
+ 
     render() {
       const isLoggedIn = isLogin()
         return(
             <nav className="navbar navbar-expand-lg navbar-light fixed-top">
             <div className="container">
-            <Link style={{color: "#fff"}} className="navbar-brand" to={"/sign-in"}>Celerity</Link>
+            <Link style={{color: "#fff"}} className="navbar-brand" to={"/sign-in"}><img src={logo} style={{width: 150}} /></Link>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul className="navbar-nav ml-auto">
                  {!isLoggedIn ? <>
