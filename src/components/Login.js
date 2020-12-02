@@ -1,18 +1,19 @@
 import React, { Component } from "react";
 import { login } from '../utils';
 
-
-
 export default class Login extends Component {
     
     constructor() {
         super()
+
+        this.state = {
+            status: null
+        }
     }
 
     handleSubmit = (event) => {
         event.preventDefault()
         const {username, password} = event.target.elements
-        const { history } = this.props;
 
         console.log(JSON.stringify({username: username.value, password: password.value}))
     
@@ -22,17 +23,24 @@ export default class Login extends Component {
                 'Content-Type': 'application/json'
               }, 
             method: 'POST',
-            // We convert the React state to JSON and send it as the POST body
             body: JSON.stringify({username: username.value, password: password.value})
-          }).then(function(response) {
-            console.log(response)
-            if(response.status == 200){
-                login();
-                history.push('/dashboard');
-          }
-          });
+          }).then(res => res.json())
+          .then(json => this.handleLogin(json.status))
+
+          
+          
     
         event.preventDefault();
+    }
+
+    handleLogin = (status) => {
+        const { history } = this.props;
+        if (status == 200) {
+            login()
+            history.push("/dashboard")
+        } else {
+            console.log("Incorrect Password!")
+        }
     }
 
     register = () => {
