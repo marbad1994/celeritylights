@@ -45,7 +45,7 @@ export default class Profile extends Component {
         return( <div style={{ marginTop: 100}}>
                 {/* <div style={{alignContent: "center", alignItems:"center", margin: 80}}>
                 </div> */}
-                <div style={{flex: 1,flexDirection: "column",padding: 16, paddingTop: 30, backgroundColor: '#454d55', margin: 20, borderRadius: 10 }}>
+                <div style={{display: "flex", flexDirection: "row" ,padding: 16, paddingTop: 30, backgroundColor: '#454d55', margin: 20, borderRadius: 10 }}>
                 <div>
                 {row("Username", this.state.data["username"])}
                 {row("First Name", this.state.data["firstName"])}
@@ -55,7 +55,7 @@ export default class Profile extends Component {
                 </div>
                 <div>
                 {/* <img style={{width: 200, height: 200, resizeMode: "cover", borderRadius: 100 }} source={ProfilePicture}/> */}
-                <img src={ProfilePicture} style={{width: 150}} />
+                <img src={ProfilePicture} style={{width: 150, marginLeft: 200, borderRadius: 75}} />
                 </div>
                 </div>
 
