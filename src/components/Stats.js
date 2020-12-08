@@ -58,7 +58,7 @@ export default class Stats extends Component {
         let l = []
         for (var key in this.state.data) {
             let rounds = this.state.data[key]["rounds"]
-            if (!l.includes(rounds)) {
+            if (!l.includes(rounds) && this.state.data[key]["program"] == "random") {
                 l.push(rounds)
             }
         }
@@ -68,6 +68,25 @@ export default class Stats extends Component {
 
     showStats = (program) => {
         this.setState({program: program, rounds: 0})
+        if (program == "sprint") {
+            this.showSprintStats()
+        }
+    }
+
+    showSprintStats = () => {
+        let l = []
+        let index = 1
+        for (var key in this.state.data) {
+            let data = this.state.data[key]
+            if (data["program"] == "sprint") {
+                console.log(data["date"])
+                console.log(data)
+                l.push([data["set"], data["totalTime"], index, data["date"]])
+                index++
+            }
+        }
+        console.log(l)
+        this.setState({table: l})
     }
 
     showRounds = (rounds) => {
@@ -76,7 +95,7 @@ export default class Stats extends Component {
         let index = 1
         for (var key in this.state.data) {
             let data = this.state.data[key]
-            if (data["rounds"] == rounds) {
+            if (data["rounds"] == rounds && data["program"] == "random") {
                 console.log(data["date"])
                 console.log(data)
                 l.push([data["set"], data["totalTime"], index, data["date"]])
@@ -152,6 +171,8 @@ export default class Stats extends Component {
             })}
             </Nav> </>: <></>}
 
+            
+
             {this.state.program == "random" && this.state.rounds != 0? 
                         <Table striped bordered hover variant="dark">
                         <thead>
@@ -174,6 +195,33 @@ export default class Stats extends Component {
                                     <td>{value[3]}</td>
                                     <td><GraphModal data={value[0]}/></td>
 
+                                </tr>
+                            )
+                        })}
+                        </tbody>
+                        </Table>
+                        :
+                    <></>}  
+
+                    {this.state.program == "sprint" ? 
+                        <Table striped bordered hover variant="dark">
+                        <thead>
+                            <tr>
+                            <th><Button onClick={this.sortIndex} variant="secondary">Index</Button></th>
+                            <th><Button onClick={this.sortTime} variant="secondary">Total Time</Button></th>
+                            <th><Button onClick={this.sortIndex} variant="secondary">Date</Button></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            
+                            
+                        {this.state.table.map((value, index) => {
+                            return(
+                                <tr key={index}>
+                                    <td>{value[2]}</td>
+                                    <td>{value[1]} sec</td>
+                                    <td>{value[3]}</td>
                                 </tr>
                             )
                         })}
