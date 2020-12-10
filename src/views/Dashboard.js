@@ -43,7 +43,7 @@ export default class Dashboard extends Component {
         const token = await getToken();
         const { data } = await AuthService.getStats(token)
         this.setState({ data: data })
-        let l = []
+        let dataPoints = []
         let pieData = []
         let programDividence = {}
         let time = 0
@@ -59,7 +59,7 @@ export default class Dashboard extends Component {
             }
             if ("program" in data){
                 if (data["program"] == "random") {
-                    l.push({ date: data["date"], Seconds: data["totalTime"], pv: 1000 })
+                    dataPoints.push({ date: data["date"], Seconds: data["totalTime"], pv: 1000 })
                 }
             }
         }
@@ -68,21 +68,22 @@ export default class Dashboard extends Component {
             pieData.push({ name: key, value: programDividence[key] })
         }
 
-        this.setState({ dataPoints: l, pieData: pieData, totalUserTime: time.toFixed(2), totalUserRun: runs })
+        this.setState({ dataPoints: dataPoints, pieData: pieData, totalUserTime: time.toFixed(2), totalUserRun: runs })
         this.getPrograms()
         this.getRandomRounds()
+        this.setDashData(dataPoints)
 
     }
 
     getRandomRounds = () => {
-        let l = []
+        let randomRounds = []
         for (var key in this.state.data) {
             let rounds = this.state.data[key]["rounds"]
-            if (!l.includes(rounds) && this.state.data[key]["program"] == "random") {
-                l.push(rounds)
+            if (!randomRounds.includes(rounds) && this.state.data[key]["program"] == "random") {
+                randomRounds.push(rounds)
             }
         }
-        this.setState({ randomRounds: l.sort() })
+        this.setState({ randomRounds: randomRounds.sort() })
     }
 
     showStats = (program) => {
@@ -93,48 +94,41 @@ export default class Dashboard extends Component {
     }
 
     showSprintStats = () => {
-        let l = []
-        let best = 0;
-        let worst = 0;
-        let avg = 0;
+        let dataPoints = []
         for (var key in this.state.data) {
             let data = this.state.data[key]
-            console.log(data)
             if (data["program"] == "sprint") {
-                l.push({ date: data["date"], Seconds: data["totalTime"], pv: 1000 })
+                dataPoints.push({ date: data["date"], Seconds: data["totalTime"], pv: 1000 })
             }
         }
-        this.setState({ dataPoints: l })
-        l.sort(function (a, b) { return a[1] > b[1]; });
-        best = l[0].Seconds
-        worst = l[l.length - 1].Seconds
-        let index = 0
-        for (index; index < l.length; index++) {
-            avg += l[index].Seconds
-        }
-        avg = (avg / index)
-        this.setState({ bestTime: best, worstTime: worst, avgTime: avg })
+        this.setState({ dataPoints: dataPoints })
+        this.setDashData(dataPoints);
     }
 
     showRounds = (rounds) => {
         this.setState({ rounds: rounds })
-        let l = []
-        let best = 0;
-        let worst = 0;
-        let avg = 0;
+        let dataPoints = []
         for (var key in this.state.data) {
             let data = this.state.data[key]
             if (data["rounds"] == rounds && data["program"] == "random") {
-                l.push({ date: data["date"], Seconds: data["totalTime"], pv: 1000 })
+                dataPoints.push({ date: data["date"], Seconds: data["totalTime"], pv: 1000 })
             }
         }
-        this.setState({ dataPoints: l })
-        l.sort(function (a, b) { return a[1] > b[1]; });
-        best = l[0].Seconds
-        worst = l[l.length - 1].Seconds
+        this.setState({ dataPoints: dataPoints })
+        this.setDashData(dataPoints);
+    }
+
+    setDashData = (dataPoints) => {
+        let best = 0;
+        let worst = 0;
+        let avg = 0;
+        let sortedDataPoints = [...dataPoints];
+        sortedDataPoints.sort(function (a, b) { return a[1] < b[1]; });
+        best = sortedDataPoints[sortedDataPoints.length - 1].Seconds
+        worst = sortedDataPoints[0].Seconds
         let index = 0
-        for (index; index < l.length; index++) {
-            avg += l[index].Seconds
+        for (index; index < sortedDataPoints.length; index++) {
+            avg += sortedDataPoints[index].Seconds
         }
         avg = (avg / index)
         this.setState({ bestTime: best, worstTime: worst, avgTime: avg })
@@ -151,22 +145,22 @@ export default class Dashboard extends Component {
         this.setState({ programs: l })
     }
     secondsToString = (seconds) => {
-    var numdays = Math.floor(seconds / 86400);
-    var numhours = Math.floor((seconds % 86400) / 3600);
-    var numminutes = Math.floor(((seconds % 86400) % 3600) / 60);
-    var numseconds = ((seconds % 86400) % 3600) % 60;
-    numdays = numdays.toFixed(0);
-    numhours = numhours.toFixed(0);
-    numminutes = numminutes.toFixed(0);
-    numseconds = numseconds.toFixed(0);
-    if (numminutes == 0) {
-        return numseconds + "s";
-    } else if (numhours == 0) {
-        return numminutes + "m " + numseconds + "s";
-    } else if (numdays == 0) {
-        return numhours + "h " + numminutes + "m " + numseconds + "s";
+    var numDays = Math.floor(seconds / 86400);
+    var numHours = Math.floor((seconds % 86400) / 3600);
+    var numMinutes = Math.floor(((seconds % 86400) % 3600) / 60);
+    var numSeconds = ((seconds % 86400) % 3600) % 60;
+    numDays = numDays.toFixed(0);
+    numHours = numHours.toFixed(0);
+    numMinutes = numMinutes.toFixed(0);
+    numSeconds = numSeconds.toFixed(0);
+    if (numMinutes == 0) {
+        return numSeconds + "s";
+    } else if (numHours == 0) {
+        return numMinutes + "m " + numSeconds + "s";
+    } else if (numDays == 0) {
+        return numHours + "h " + numMinutes + "m " + numSeconds + "s";
     }
-    return numdays + "d " + numhours + "h " + numminutes + "m " + numseconds + "s";
+    return numDays + "d " + numHours + "h " + numMinutes + "m " + numSeconds + "s";
     }
 
     render() {

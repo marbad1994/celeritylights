@@ -63,7 +63,7 @@ constructor(props){
 
 	render () {
   	return (
-    	<PieChart width={430} height={550} style={{marginTop: 20, marginLeft: -100}} >
+    	<PieChart width={460} height={550} style={{marginTop: 20, marginLeft: -100}} >
         <Pie 
         	activeIndex={this.state.activeIndex}
           activeShape={this.renderActiveShape} 
