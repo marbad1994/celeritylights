@@ -1,7 +1,10 @@
-import React, { Component, setState } from "react";
+import React, { Component } from "react";
 import { login } from '../utils';
-import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
+import services from '../services';
+import { isLogin } from '../utils';
+
+const { AuthService } = services;
 
 export default class Login extends Component {
     
@@ -14,38 +17,25 @@ export default class Login extends Component {
         }
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault()
         const {username, password} = event.target.elements
-
-        console.log(JSON.stringify({username: username.value, password: password.value}))
-    
-        fetch('https://celerity-backend.herokuapp.com/login', {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              }, 
-            method: 'POST',
-            body: JSON.stringify({username: username.value, password: password.value})
-          }).then(res => res.json())
-          .then(json => this.handleLogin(json.status))
-
-          
-          
-    
+        console.log(username, password)
+        const { history } = this.props;
+        try {
+            const { token } = await AuthService.login(username.value, password.value);
+            await login(token);
+            if (await isLogin()) {
+                history.push("/dashboard")
+            }
+            
+          } catch (ex) {
+            this.setState({alert: true})
+          }
         event.preventDefault();
     }
 
-    handleLogin = (status) => {
-        const { history } = this.props;
-        if (status == 200) {
-            login()
-            history.push("/dashboard")
-        } else {
-            console.log("Incorrect Password!")
-            this.setState({alert: true})
-        }
-    }
+
 
     register = () => {
         const { history } = this.props;
@@ -63,9 +53,6 @@ export default class Login extends Component {
         this.setState({password: event.target.value});
     }
     
- 
-
-
     render() {
         return (
             

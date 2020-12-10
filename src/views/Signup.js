@@ -1,8 +1,10 @@
 import React, { Component, setState } from "react";
 import { Link } from "react-router-dom";
-import Navbar from './Navbar'
+import Navbar from '../components/Navbar'
 import Alert from 'react-bootstrap/Alert';
+import services from '../services';
 
+const { AuthService } = services;
 
 export default class SignUp extends Component {
 
@@ -13,36 +15,17 @@ export default class SignUp extends Component {
         }
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault()
-        const {username, password, email, address, lastName, firstName} = event.target.elements
-
-        console.log(JSON.stringify({username: username.value, password: password.value, email: email.value, address: address.value, firstName: firstName.value, lastName: lastName.value}))
-    
-        fetch('https://celerity-backend.herokuapp.com/register', {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              }, 
-            method: 'POST',
-            body: JSON.stringify({username: username.value, password: password.value, email: email.value, address: address.value, firstName: firstName.value, lastName: lastName.value})
-          }).then(res => res.json())
-          .then(json => this.handleRegister(json.status))
-
-          
-          
-    
-        event.preventDefault();
-    }
-
-    handleRegister = (status) => {
         const { history } = this.props;
-        if (status == 200) {
-            history.push("/sign-in")
-        } else {
-            console.log("Incorrect Password!")
+        const {username, password, email, address, firstName, lastName} = event.target.elements
+        try {
+            await AuthService.login(username.value, password.value, email.value, address.value, firstName.value, lastName.value);
+            history.push("/login")
+        } catch (ex) {
             this.setState({alert: true})
-        }
+        }  
+        event.preventDefault();
     }
 
     handleUsernameChange = (event) => {

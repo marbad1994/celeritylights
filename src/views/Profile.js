@@ -1,33 +1,28 @@
 import React, { Component } from 'react';
 import ProfilePicture from '../me.png';
+import services from '../services';
+import { getToken } from '../utils';
 
-
-
+const { AuthService } = services;
 
 export default class Profile extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: {}
+            data: {},
+            username: "",
+            firstName: "",
+            lastName: "",
+            email: "",
+            address: ""
         }
     }
 
-    componentDidMount = async() => {
-        await fetch('https://celerity-backend.herokuapp.com/profile-data', {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          }, 
-        method: 'POST',
-        // We convert the React state to JSON and send it as the POST body
-        body: JSON.stringify({username: "marbad"})
-      }).then(res => res.json())
-      .then(json => this.setState({data: json.data}))
-
-      console.log(this.state.data)
-        
+    componentDidMount = async () => {
+        const token = await getToken();
+        const { data: { username, firstName, lastName, email, address } } = await AuthService.getProfile(token)
+        this.setState({ username: username, firstName: firstName, lastName: lastName, email: email, address: address })
     }
-
 
     render() {
         const row = (category, value, capitalize=true) => {
@@ -43,18 +38,15 @@ export default class Profile extends Component {
             )
         }
         return( <div style={{ marginTop: 100}}>
-                {/* <div style={{alignContent: "center", alignItems:"center", margin: 80}}>
-                </div> */}
                 <div style={{display: "flex", flexDirection: "row" ,padding: 16, paddingTop: 30, backgroundColor: '#454d55', margin: 20, borderRadius: 10 }}>
                 <div>
-                {row("Username", this.state.data["username"])}
-                {row("First Name", this.state.data["firstName"])}
-                {row("Last Name", this.state.data["lastName"])}
-                {row("Email", this.state.data["email"], false)}
-                {row("Address", this.state.data["address"])}
+                {row("Username", this.state.username)}
+                {row("First Name", this.state.firstName)}
+                {row("Last Name", this.state.lastName)}
+                {row("Email", this.state.email, false)}
+                {row("Address", this.state.address)}
                 </div>
                 <div>
-                {/* <img style={{width: 200, height: 200, resizeMode: "cover", borderRadius: 100 }} source={ProfilePicture}/> */}
                 <img src={ProfilePicture} style={{width: 150, marginLeft: 200, borderRadius: 75}} />
                 </div>
                 </div>

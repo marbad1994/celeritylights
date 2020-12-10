@@ -1,7 +1,7 @@
 const TOKEN_KEY = 'jwt';
 
-export const login = () => {
-    localStorage.setItem(TOKEN_KEY, 'TestLogin');
+export const login = (token) => {
+    localStorage.setItem(TOKEN_KEY, token);
 }
 
 export const logout = () => {
@@ -12,6 +12,9 @@ export const isLogin = () => {
     if (localStorage.getItem(TOKEN_KEY)) {
         return true;
     }
-
     return false;
+}
+
+export const getToken = async () => {
+    return await localStorage.getItem(TOKEN_KEY)
 }
