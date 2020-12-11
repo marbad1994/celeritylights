@@ -140,5 +140,6 @@ body, html, .App, #root, .auth-wrapper {
 }
 
 .linear-background {
-  background: linear-gradient(to top, #282828 0%, #282828 10%,  green 90%) !important;
+  /* background: linear-gradient(to top, #282828 0%,  green 100%) !important; */
+  background-color: green !important;
 }

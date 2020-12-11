@@ -56,7 +56,7 @@ export default class Dashboard extends Component {
                 programDividence[data["program"]] = 1
             }
             if ("program" in data){
-                if (data["program"] == "random") {
+                if (data["program"] == "random" && data["rounds"] == 10) {
                     dataPoints.push({ date: data["date"], Seconds: data["totalTime"], pv: 1000 })
                 }
             }
@@ -66,7 +66,7 @@ export default class Dashboard extends Component {
             pieData.push({ name: key, value: programDividence[key] })
         }
 
-        this.setState({ dataPoints: dataPoints, pieData: pieData, totalUserTime: time.toFixed(2), totalUserRun: runs })
+        this.setState({ dataPoints: dataPoints, pieData: pieData, totalUserTime: time.toFixed(2), totalUserRun: runs, program: "random", rounds: 10 })
         this.getPrograms()
         this.getRandomRounds()
         this.setDashData(await dataPoints)
@@ -195,7 +195,28 @@ export default class Dashboard extends Component {
                                 )
                             })}
                         </Nav> </> : <></>}
-                <Container>
+                <Container style={{paddingBottom: 40}}>
+                    <Row>
+                        <Col>
+                        <div className="linear-background" style={{marginLeft: -80, width: 1190, height: 40, borderRadius: 5, marginTop: 20, display: "flex", alignItems: "center", boxShadow: "1px 1px 10px rgba(0,0,0,0.1)"}}>
+                        <h4 style={{color: "white", marginLeft: 20, marginTop: 8}}>Dashboard</h4>
+                        </div>
+</Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        <div className="linear-background" style={{ marginLeft: -80, width: 740, height: 40, borderRadius: 5, marginTop: 20, display: "flex", alignItems: "center", boxShadow: "1px 1px 10px rgba(0,0,0,0.1)"}}>
+
+                            <h5 style={{color: "white", marginLeft: 20, textTransform: "capitalize", marginTop: 8}}>Statistics: {this.state.program}{this.state.rounds != 0 && "/" + this.state.rounds}</h5>
+  
+                        
+                        </div>
+                        </Col>
+                        <Col>
+                        <div className="linear-background" style={{ width: 420, height: 40, borderRadius: 5, marginTop: 20, display: "flex", alignItems: "center",  boxShadow: "1px 1px 10px rgba(0,0,0,0.1)"}}><h5 style={{color: "white", marginLeft: 20, marginTop: 8}}>Overall Statistics</h5></div>
+                        
+                        </Col>
+                    </Row>
                     <Row>
                         <Col style={{ marginLeft: -100 }}>
                             <div style={{ backgroundColor: "#252526", width: 740, height: 400, marginTop: 20, marginLeft: 20, borderRadius: 5 , boxShadow: "1px 1px 5px rgba(0,0,0,0.2)"}}>
@@ -216,10 +237,10 @@ export default class Dashboard extends Component {
                             </div>
 
                             <CardGroup style={{ width: 760 }}>
-                                <Card
+                                <Card 
                                     text={'white'}
-                                    style={{ width: '18rem', backgroundColor: "green", marginLeft: 20, marginTop: 20, boxShadow: "1px 1px 5px rgba(0,0,0,0.2)" }}
-                                    className="mb-2"
+                                    style={{ width: '18rem',marginLeft: 20, marginTop: 20, boxShadow: "1px 1px 5px rgba(0,0,0,0.2)" }}
+                                    className="mb-2 linear-background"
                                 >
                                     <Card.Body>
                                         <Card.Title>Best Time</Card.Title>
@@ -232,8 +253,8 @@ export default class Dashboard extends Component {
                                 <Card
 
                                     text={'white'}
-                                    style={{ width: '18rem', backgroundColor: "green", marginLeft: 20, marginTop: 20, boxShadow: "1px 1px 5px rgba(0,0,0,0.2)" }}
-                                    className="mb-2"
+                                    style={{ width: '18rem', marginLeft: 20, marginTop: 20, boxShadow: "1px 1px 5px rgba(0,0,0,0.2)" }}
+                                    className="mb-2 linear-background"
                                 >
                                     <Card.Body>
                                         <Card.Title>Worst Time</Card.Title>
@@ -244,8 +265,8 @@ export default class Dashboard extends Component {
                                 </Card>
                                 <Card
                                     text={'white'}
-                                    style={{ width: '18rem', backgroundColor: "green", marginLeft: 20, marginTop: 20 }}
-                                    className="mb-2"
+                                    style={{ width: '18rem', marginLeft: 20, marginTop: 20 }}
+                                    className="mb-2 linear-background"
                                 >
                                     <Card.Body>
                                         <Card.Title>Average Time</Card.Title>
@@ -257,7 +278,7 @@ export default class Dashboard extends Component {
                             </CardGroup>
                         </Col>
                         <Col >
-                        <div style={{backgroundColor: "green", height: 555, borderRadius: 5, boxShadow: "1px 1px 5px rgba(0,0,0,0.2)"}}>
+                        <div className="linear-background"  style={{ height: 555, borderRadius: 5, boxShadow: "1px 1px 5px rgba(0,0,0,0.2)"}}>
                             
                             <PieChart2 data={this.state.pieData}  />
                             <div style={{flexDirection: "column"}}>
