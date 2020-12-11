@@ -23,10 +23,10 @@ constructor(props){
     const ex = mx + (cos >= 0 ? 1 : -1) * 22;
     const ey = my;
     const textAnchor = cos >= 0 ? 'start' : 'end';
-  
+
     return (
       <g>
-        <text style={{textTransform: "capitalize"}} x={cx} y={cy} dy={8} textAnchor="middle" fill={"#fff"}>{payload.name}</text>
+        <text style={{textTransform: "capitalize"}} x={cx} y={cy} dy={8} textAnchor="middle" stroke="#fff" fill={"#fff"}>{payload.name}</text>
         <Sector
           cx={cx}
           cy={cy}
@@ -47,7 +47,7 @@ constructor(props){
         />
         <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={"#1E1E20"} fill="none"/>
         <circle cx={ex} cy={ey} r={2} fill={"#1E1E20"} stroke="none"/>
-        <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`Runs: ${value}`}</text>
+        <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} stroke="#fff" fill="#fff">{`Runs: ${value}`}</text>
         {/* <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
           {`(Rate ${(percent * 100).toFixed(2)}%)`}
         </text> */}

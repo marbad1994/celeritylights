@@ -24,16 +24,16 @@ export default class Graph extends React.Component {
             <AreaChart width={740} height={400} data={this.dataPoints}
    margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
    <defs>
-     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-       <stop offset="5%" stopColor="#1DB954" stopOpacity={0.8}/>
-       <stop offset="95%" stopColor="#1DB954" stopOpacity={0}/>
-     </linearGradient>
+   <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="25%" stopColor="green" stopOpacity={0.9} />
+        <stop offset="95%" stopColor="green" stopOpacity={0.1} />
+    </linearGradient>
    </defs>
-   <XAxis dataKey="name" />
-   <YAxis />
-   <CartesianGrid strokeDasharray="3 3" />
+   <XAxis dataKey="name" stroke="#fff" />
+   <YAxis stroke="#fff" />
+    <CartesianGrid strokeDasharray="4 4"/>
    <Tooltip />
-   <Area type="monotone" dataKey="Seconds" stroke="#1DB954" fillOpacity={1} fill="url(#colorUv)" />
+   <Area type="monotone" dataKey="Seconds"   stroke="#32383F"  fillOpacity={1} fill="url(#colorUv)"  />
  </AreaChart>
  
 

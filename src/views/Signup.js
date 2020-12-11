@@ -1,6 +1,5 @@
 import React, { Component, setState } from "react";
 import { Link } from "react-router-dom";
-import Navbar from '../components/Navbar'
 import Alert from 'react-bootstrap/Alert';
 import services from '../services';
 
@@ -61,8 +60,7 @@ export default class SignUp extends Component {
     render() {
         return (
             <div>
-            <Navbar isLogin={false}/>
-            <div className="auth-wrapper" style={{marginTop: 100}}>
+            <div className="auth-wrapper" style={{marginTop: 60}}>
             {this.state.alert && <Alert variant="danger">
                     Something went wrong
             </Alert>}
@@ -100,7 +98,7 @@ export default class SignUp extends Component {
                     <input type="password" className="form-control" placeholder="Enter password" id="password"/>
                 </div>
 
-                <button value="submit" type="submit" className="btn btn-success btn-block">Sign Up</button>
+                <button value="submit" type="submit" className="btn btn-info btn-block">Sign Up</button>
                 <p className="forgot-password text-right">
                     Already registered? <Link  className="nav-link" to={"/sign-in"}>Sign In</Link>
                 </p>

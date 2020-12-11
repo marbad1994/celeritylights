@@ -11,17 +11,17 @@ function GraphModal(props) {
   
     return (
       <>
-        <Button variant="success" onClick={handleShow}>
+        <Button variant="btn btn-info" onClick={handleShow}>
           Graph
         </Button>
 
         <Modal size="lg" aria-labelledby="example-modal-sizes-title-lg" show={show} onHide={handleClose}>
-          <Modal.Header style={{backgroundColor: "#000"}} closeButton>
+          <Modal.Header style={{backgroundColor: "#252526"}} closeButton>
             <Modal.Title style={{color: "green"}} id="example-modal-sizes-title-lg">Graph</Modal.Title>
           </Modal.Header>
-          <Modal.Body style={{backgroundColor: "#000"}}><Graph data={props.data}/></Modal.Body>
-          <Modal.Footer style={{backgroundColor: "#000"}}>
-            <Button variant="success" onClick={handleClose}>
+          <Modal.Body style={{backgroundColor: "#252526"}}><Graph data={props.data}/></Modal.Body>
+          <Modal.Footer style={{backgroundColor: "#252526"}}>
+            <Button variant="btn btn-outline-info" onClick={handleClose}>
               Close
             </Button>
           </Modal.Footer>

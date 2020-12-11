@@ -129,38 +129,35 @@ export default class Stats extends Component {
     render() {
         return (
 
-            <div style={{ marginTop: 65, backgroundColor: "gray" }}>
+            <div >
 
 
-                <Navbar bg="dark" variant="dark">
+                <Navbar style={{backgroundColor: "#121212"}} variant="dark">
                     <Navbar.Brand>
 
                         Programs
                         </Navbar.Brand>
                 </Navbar>
 
-                <Nav variant="tabs" style={{ backgroundColor: "#000" , marginBottom: -1}}>
+                <Nav variant="tabs" style={{backgroundColor: "#171717"}}>
                     {this.state.programs.map((value, index) => {
                         return (
                             <Nav.Item key={index}>
-                                <Nav.Link style={{ color: "green", textTransform: "capitalize" }} onClick={() => this.showStats(value)} key={index}>{value}</Nav.Link>
+                                <Nav.Link className={"menu-item"} style={{ textTransform: "capitalize" }} onClick={() => this.showStats(value)} key={index}>{value}</Nav.Link>
                             </Nav.Item>
                         )
                     })}
                 </Nav>
 
                 {this.state.program == "random" ?
-                    <>                    <Navbar bg="dark" variant="dark" style={{height: 35}}>
-                        <Navbar.Brand>
-
-                            Rounds
-                            </Navbar.Brand>
+                    <>                    <Navbar variant="dark" style={{ height: 40, backgroundColor: "#1E1E1E" }}>>
+                        <Navbar.Brand>Rounds</Navbar.Brand>
                     </Navbar>
-                        <Nav variant="tabs" style={{ backgroundColor: "#000" , marginBottom: -1}}>
+                        <Nav variant="tabs" style={{backgroundColor: "#252526" }}>
                             {this.state.randomRounds.map((value, index) => {
                                 return (
                                     <Nav.Item key={index}>
-                                        <Nav.Link style={{ color: "green" }} onClick={() => this.showRounds(value)} key={index}>{value}</Nav.Link>
+                                        <Nav.Link className={"menu-item"} onClick={() => this.showRounds(value)} key={index}>{value}</Nav.Link>
                                     </Nav.Item>
                                 )
                             })}
@@ -170,12 +167,12 @@ export default class Stats extends Component {
 
                 {this.state.program == "random" && this.state.rounds != 0 ?
                     <Table striped bordered hover variant="dark">
-                        <thead>
+                        <thead style={{backgroundColor: "#171717"}}>
                             <tr>
-                                <th><Button onClick={this.sortIndex} variant="secondary">Index</Button></th>
-                                <th><Button onClick={this.sortTime} variant="secondary">Total Time</Button></th>
-                                <th><Button onClick={this.sortIndex} variant="secondary">Date</Button></th>
-                                <th><Button onClick={this.sortIndex} variant="secondary">Graph</Button></th>
+                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={this.sortIndex}>Index</Nav.Link></th>
+                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={this.sortTime}>Total Time</Nav.Link></th>
+                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={this.sortIndex}>Date</Nav.Link></th>
+                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={this.sortIndex}>Graph</Nav.Link></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -198,11 +195,11 @@ export default class Stats extends Component {
 
                 {this.state.program == "sprint" ?
                     <Table striped bordered hover variant="dark">
-                        <thead>
+                        <thead style={{backgroundColor: "#171717"}}>
                             <tr>
-                                <th><Button onClick={this.sortIndex} variant="secondary">Index</Button></th>
-                                <th><Button onClick={this.sortTime} variant="secondary">Total Time</Button></th>
-                                <th><Button onClick={this.sortIndex} variant="secondary">Date</Button></th>
+                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={this.sortIndex}>Index</Nav.Link></th>
+                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={this.sortTime}>Total Time</Nav.Link></th>
+                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={this.sortIndex}>Date</Nav.Link></th>
                             </tr>
                         </thead>
                         <tbody>

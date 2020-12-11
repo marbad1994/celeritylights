@@ -26,7 +26,7 @@ export default class Login extends Component {
             const { token } = await AuthService.login(username.value, password.value);
             await login(token);
             if (await isLogin()) {
-                history.push("/dashboard")
+                history.push("/")
             }
             
           } catch (ex) {
@@ -55,10 +55,8 @@ export default class Login extends Component {
     
     render() {
         return (
-            
-            <div>
-                            
-            <div className="auth-wrapper" style={{marginTop: 100}}>
+            <div>        
+            <div className="auth-wrapper" style={{marginTop: 60}}>
             {this.state.alert && <Alert variant="danger">
                     Incorrect username or password
             </Alert>}
@@ -84,7 +82,7 @@ export default class Login extends Component {
                     </div>
                 </div>
 
-                <button value="submit" type="submit" className="btn btn-success btn-block">Submit</button>
+                <button value="submit" type="submit" className="btn btn-info btn-block">Submit</button>
                 <p className="forgot-password text-right">
                     <a href="/register" onClick={this.register}>Register</a>
                 </p>

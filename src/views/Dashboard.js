@@ -1,5 +1,5 @@
-import React, { Component, StyleSheet } from "react";
-import { AreaChart, XAxis, YAxis, Area, CartesianGrid, Tooltip, PieChart, Pie, ResponsiveContainer, Legend } from 'recharts';
+import React, { Component } from "react";
+import { AreaChart, XAxis, YAxis, Area, CartesianGrid, Tooltip } from 'recharts';
 import Nav from "react-bootstrap/Nav";
 import Navbar from 'react-bootstrap/Navbar'
 import { getToken } from '../utils';
@@ -12,8 +12,6 @@ import Col from 'react-bootstrap/Col'
 import PieChart2 from '../components/PieChart2';
 
 const { AuthService } = services;
-
-
 
 export default class Dashboard extends Component {
 
@@ -71,7 +69,7 @@ export default class Dashboard extends Component {
         this.setState({ dataPoints: dataPoints, pieData: pieData, totalUserTime: time.toFixed(2), totalUserRun: runs })
         this.getPrograms()
         this.getRandomRounds()
-        this.setDashData(dataPoints)
+        this.setDashData(await dataPoints)
 
     }
 
@@ -165,35 +163,34 @@ export default class Dashboard extends Component {
 
     render() {
         return (
-            <div style={{ marginTop: 65}}>
-                <Navbar bg="#333333" variant="dark">
+            <div>
+                <Navbar style={{backgroundColor: "#121212"}} variant="dark">
                     <Navbar.Brand>
-
                         Programs
                     </Navbar.Brand>
                 </Navbar>
 
-                <Nav variant="tabs" style={{ backgroundColor: "#000" }}>
+                <Nav style={{backgroundColor: "#171717"}} variant="tabs" defaultActiveKey="Root">
                     {this.state.programs.map((value, index) => {
                         return (
                             <Nav.Item key={index}>
-                                <Nav.Link style={{ color: "green", textTransform: "capitalize" }} onClick={() => this.showStats(value)} key={index}>{value}</Nav.Link>
+                                <Nav.Link className={"menu-item"} style={{textTransform: "capitalize" }} onClick={() => this.showStats(value)} evebtKey={index} key={index}>{value}</Nav.Link>
                             </Nav.Item>
                         )
                     })}
                 </Nav>
                 {this.state.program == "random" ?
-                    <>                    <Navbar bg="2D2D2D" variant="dark" style={{ height: 35 }}>
+                    <>                    <Navbar variant="dark" style={{ height: 40, backgroundColor: "#1E1E1E" }}>
                         <Navbar.Brand>
 
                             Rounds
                             </Navbar.Brand>
                     </Navbar>
-                        <Nav variant="tabs" style={{ backgroundColor: "#000", marginBottom: -1 }}>
+                        <Nav variant="tabs" style={{backgroundColor: "#252526" }}>
                             {this.state.randomRounds.map((value, index) => {
                                 return (
                                     <Nav.Item key={index}>
-                                        <Nav.Link style={{ color: "green" }} onClick={() => this.showRounds(value)} key={index}>{value}</Nav.Link>
+                                        <Nav.Link className={"menu-item"} onClick={() => this.showRounds(value)} key={index}>{value}</Nav.Link>
                                     </Nav.Item>
                                 )
                             })}
@@ -203,15 +200,15 @@ export default class Dashboard extends Component {
                         <Col style={{ marginLeft: -100 }}>
                             <div style={{ backgroundColor: "#252526", width: 740, height: 400, marginTop: 20, marginLeft: 20, borderRadius: 5 , boxShadow: "1px 1px 5px rgba(0,0,0,0.2)"}}>
                                 <AreaChart width={740} height={400} data={this.state.dataPoints}
-                                    margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                                    margin={{ top: 20, left: -20, bottom: 20, right: 20 }}>
                                     <defs>
                                         <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                                             <stop offset="25%" stopColor="green" stopOpacity={0.9} />
                                             <stop offset="95%" stopColor="green" stopOpacity={0.1} />
                                         </linearGradient>
                                     </defs>
-                                    <XAxis dataKey="date" domain={['dataMin', 'dataMax']} />
-                                    <YAxis />
+                                    <XAxis dataKey="date" domain={['dataMin', 'dataMax']} stroke="#fff" hide={true}/>
+                                    <YAxis stroke="#fff" />
                                     <CartesianGrid strokeDasharray="4 4"/>
                                     <Tooltip />
                                     <Area type="monotone" dataKey="Seconds"  stroke="#32383F"  fillOpacity={1} fill="url(#colorUv)" />
@@ -220,7 +217,7 @@ export default class Dashboard extends Component {
 
                             <CardGroup style={{ width: 760 }}>
                                 <Card
-                                    text={"success" === 'light' ? 'dark' : 'white'}
+                                    text={'white'}
                                     style={{ width: '18rem', backgroundColor: "green", marginLeft: 20, marginTop: 20, boxShadow: "1px 1px 5px rgba(0,0,0,0.2)" }}
                                     className="mb-2"
                                 >
@@ -234,7 +231,7 @@ export default class Dashboard extends Component {
 
                                 <Card
 
-                                    text={"success" === 'light' ? 'dark' : 'white'}
+                                    text={'white'}
                                     style={{ width: '18rem', backgroundColor: "green", marginLeft: 20, marginTop: 20, boxShadow: "1px 1px 5px rgba(0,0,0,0.2)" }}
                                     className="mb-2"
                                 >
@@ -246,7 +243,7 @@ export default class Dashboard extends Component {
                                     </Card.Body>
                                 </Card>
                                 <Card
-                                    text={"success" === 'light' ? 'dark' : 'white'}
+                                    text={'white'}
                                     style={{ width: '18rem', backgroundColor: "green", marginLeft: 20, marginTop: 20 }}
                                     className="mb-2"
                                 >
