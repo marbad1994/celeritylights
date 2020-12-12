@@ -40,7 +40,7 @@ export default class Profile extends Component {
         return( <div style={{ marginTop: 100}}>
                 <div style={{display: "flex", flexDirection: "row" ,padding: 16, paddingTop: 30, backgroundColor: '#454d55', margin: 20, borderRadius: 10 }}>
                 <div>
-                {row("Username", this.state.username)}
+                {row("Username", this.state.username, false)}
                 {row("First Name", this.state.firstName)}
                 {row("Last Name", this.state.lastName)}
                 {row("Email", this.state.email, false)}

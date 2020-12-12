@@ -93,37 +93,28 @@ export default class Stats extends Component {
         this.setState({ table: l })
     }
 
-    sortTime = () => {
+    sortTable = (value) => {
+        let index = 0
+        switch (value) {
+            case "Index":
+                index = 0;
+                break;
+            case "Total Time":
+                index = 1;
+                break;
+            case "Date":
+                index = 2;
+                break;
+            default:
+                index = 0;
+                break;
+        }
         this.setState({ sort: !this.state.sort })
         if (this.state.sort) {
-            this.state.table.sort(function (a, b) { return a[1] > b[1]; });
+            this.state.table.sort(function (a, b) { return a[index] > b[index]; });
         } else {
-            this.state.table.sort(function (a, b) { return a[1] < b[1]; });
-
+            this.state.table.sort(function (a, b) { return a[index] < b[index]; });
         }
-        this.forceUpdate()
-    }
-
-    sortIndex = () => {
-        this.setState({ sort: !this.state.sort })
-        if (this.state.sort) {
-            this.state.table.sort(function (a, b) { return a[2] > b[2]; });
-        } else {
-            this.state.table.sort(function (a, b) { return a[2] < b[2]; });
-
-        }
-        this.forceUpdate()
-    }
-
-    sortDate = () => {
-        this.setState({ sort: !this.state.sort })
-        if (this.state.sort) {
-            this.state.table.sort(function (a, b) { return a[3] > b[3]; });
-        } else {
-            this.state.table.sort(function (a, b) { return a[3] < b[3]; });
-
-        }
-        this.forceUpdate()
     }
 
     render() {
@@ -169,10 +160,10 @@ export default class Stats extends Component {
                     <Table striped bordered hover variant="dark">
                         <thead style={{backgroundColor: "#171717"}}>
                             <tr>
-                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={this.sortIndex}>Index</Nav.Link></th>
-                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={this.sortTime}>Total Time</Nav.Link></th>
-                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={this.sortIndex}>Date</Nav.Link></th>
-                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={this.sortIndex}>Graph</Nav.Link></th>
+                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={() => this.sortTable("Index")}>Index</Nav.Link></th>
+                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={() => this.sortTable("Total Time")}>Total Time</Nav.Link></th>
+                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={() => this.sortTable("Date")}>Date</Nav.Link></th>
+                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={() => this.sortTable("Index")}>Graph</Nav.Link></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -197,9 +188,9 @@ export default class Stats extends Component {
                     <Table striped bordered hover variant="dark">
                         <thead style={{backgroundColor: "#171717"}}>
                             <tr>
-                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={this.sortIndex}>Index</Nav.Link></th>
-                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={this.sortTime}>Total Time</Nav.Link></th>
-                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={this.sortIndex}>Date</Nav.Link></th>
+                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={() => this.sortTable("Index")}>Index</Nav.Link></th>
+                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={() => this.sortTable("Total Time")}>Total Time</Nav.Link></th>
+                            <th><Nav.Link className={"menu-item"} style={{ textTransform: "capitalize", fontSize: 20}} onClick={() => this.sortTable("Index")}>Date</Nav.Link></th>
                             </tr>
                         </thead>
                         <tbody>
